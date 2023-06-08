@@ -7,8 +7,7 @@ import {
 import Iteruyo, { $ } from "https://deno.land/x/iteruyo@v0.2.0/mod.ts"
 
 const undup =
-    <T>
-    (it: Iteruyo<T>) =>
+    (it: Iteruyo<string>) =>
     new Iteruyo(new Set(it))
 
 const norm = (a: string) => {
@@ -28,6 +27,27 @@ const inspect = <T>(it: Iteruyo<T>) => {
     return it
 }
 
+const rotStr = (str: string) =>
+    [...str].map((_, i) => [
+        ...str.slice(i),
+        ...str.slice(0, i),
+    ].join(""))
+
+const rotate = 
+    (it: Iteruyo<string>) =>
+    it.flatMap(
+        (s: string) =>
+            new CartesianProduct(
+                rotStr(s.slice(0, 4)),
+                rotStr(s.slice(4, 8)),
+            )        
+    )
+    .map(x => x.join(""))
+
+const swap =
+    (s: string) =>
+    [s, s.slice(4, 8) + s.slice(0, 4)]
+
 console.log(
     $(new Permutation("aabbccxx")) // 8!
         .map(chars => chars.join(""))
@@ -39,3 +59,5 @@ console.log(
         .pipe(() => {})
         //.toArray()
 )
+
+console.log(swap("abcdefgh"))
