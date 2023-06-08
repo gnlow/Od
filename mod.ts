@@ -48,16 +48,23 @@ const swap =
     (s: string) =>
     [s, s.slice(4, 8) + s.slice(0, 4)]
 
-console.log(
-    $(new Permutation("aabbccxx")) // 8!
-        .map(chars => chars.join(""))
-            .pipe(undup)    // /2^4
-            .pipe(inspect)
-        .map(norm)
-            .pipe(undup)    // /3!
-            .pipe(inspect)
-        .pipe(() => {})
-        //.toArray()
-)
+const result =
+$(new Permutation("aabbccxx")) // 8!
+    .map(chars => chars.join(""))
+        .pipe(undup)    // /2^4
+        .pipe(inspect)
+    .map(norm)
+        .pipe(undup)    // /3!
+        .pipe(inspect)
+    .map(
+        s => new CartesianProduct(
+            rotStr(s.slice(0, 4)),
+            rotStr(s.slice(4, 8)),
+        ).toArray()
+        .map(x => x.join(""))
+        .sort()[0]
+    )
+        .pipe(undup)    // 
+        .pipe(inspect)
 
-console.log(swap("abcdefgh"))
+Deno.writeTextFile("68.txt", result.join("\n"))
