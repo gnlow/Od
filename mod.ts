@@ -1,33 +1,15 @@
 import {
     Permutation,
     Combination,
+    CartesianProduct
 } from "npm:js-combinatorics"
 
 import Iteruyo, { $ } from "https://deno.land/x/iteruyo@v0.2.0/mod.ts"
 
 const undup =
-    <T>(eq: (a: T, b: T) => boolean) =>
-    (it: Iteruyo<T>) => {
-        return new Iteruyo(function*() {
-            const prev: T[] = []
-            for (const curr of it) {
-                if (!prev.find(x => eq(x, curr))) {
-                    yield curr
-                    prev.push(curr)
-                }
-            }
-
-        })
-    }
-    /*
-    it.reduce(
-        (prev, curr) =>
-            prev.find(x => eq(x, curr))
-                ? prev
-                : prev.concat(curr)
-        ,
-        [] as T[]
-    )*/
+    <T>
+    (it: Iteruyo<T>) =>
+    new Iteruyo(new Set(it))
 
 const norm = (a: string) => {
     let list = "";
@@ -36,19 +18,24 @@ const norm = (a: string) => {
         const foo = list.indexOf(char)
         if (foo == -1) {
             list += char
-            return list.length - 1
-        } else return foo
+            return "abc"[list.length - 1]
+        } else return "abc"[foo]
     }).join("")
 }
 
-const swap = undup<string>((a, b) => {
-    return norm(a) == norm(b)
-})
+const inspect = <T>(it: Iteruyo<T>) => {
+    console.log(it.length)
+    return it
+}
 
 console.log(
-    $(new Permutation("aabbccxx"))
+    $(new Permutation("aabbccxx")) // 8!
         .map(chars => chars.join(""))
-        .pipe(swap)
-        //.length
-        .toArray()
+            .pipe(undup)    // /2^4
+            .pipe(inspect)
+        .map(norm)
+            .pipe(undup)    // /3!
+            .pipe(inspect)
+        .pipe(() => {})
+        //.toArray()
 )
