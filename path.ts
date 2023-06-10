@@ -47,33 +47,37 @@ const pathGen =
                         y += -100
                         result += 
                             "a 100 100 0 0 1 -100 -100 \n" +
-                            `v ${Math.max(to.y - y, 0)} \n`
+                            `v ${Math.min(to.y - y + 100, 0)} \n`
+                        y += Math.min(to.y - y + 100, 0)
                         break
                     case "U":
                         x += 100
                         y += -100
                         result += 
                             "a 100 100 0 0 1 100 -100 \n" +
-                            `h ${Math.max(to.x - x, 0)} \n`
+                            `h ${Math.max(to.x - x - 100, 0)} \n`
+                        x += Math.max(to.x - x - 100, 0)
                         break
                     case "R":
                         x += 100
                         y += 100
+                        console.log({x, y}, to)
                         result += 
                             "a 100 100 0 0 1 100 100 \n" +
-                            `v ${Math.min(to.y - y, 0)} \n`
+                            `v ${Math.max(to.y - y - 100, 0)} \n`
+                        y += Math.max(to.y - y - 100, 0)
                         break
                     case "D":
                         x += -100
                         y += 100
-                        console.log({x, y}, to)
                         result += 
                             "a 100 100 0 0 1 -100 100 \n" +
-                            `h ${Math.min(to.x - x, 0)} \n`
+                            `h ${Math.min(to.x - x + 100, 0)} \n`
+                        x += Math.min(to.x - x + 100, 0)
                         break
                 }
             })
             return result
     }
 
-console.log(pathGen(["1L", "2U"]))
+console.log(pathGen(["1L", "2D"]))
