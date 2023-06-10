@@ -25,7 +25,7 @@ const getCoord =
     (point: string) => {
         let [x, y] = {
             1: [0, 0],
-            2: [300, 0],
+            2: [500, 0],
         }[point[0]]!
         if (point[1] == "L") x -= 100
         if (point[1] == "U") y -= 100
@@ -38,7 +38,7 @@ const pathGen =
         const [from, to] = path.map(getCoord)
         let {x, y} = from
         let result = ""
-        result += `M ${x} ${y} \n`
+        //result += `M ${x} ${y} \n`
         ;[..."LURDLURD".match(RegExp(`${from.d}.*?${to.d}.`))![0]]
             .map(d => {
                 switch (d) {
@@ -80,4 +80,10 @@ const pathGen =
             return result
     }
 
-console.log(pathGen(["1L", "2D"]))
+
+const result = pathGen(["1L", "2D"])
+console.log(result)
+
+import print from "./src/print.ts"
+import svg from "./a.tsx"
+print(svg(result), "a.svg")
