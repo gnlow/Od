@@ -53,5 +53,10 @@ $(new Permutation("aabbxx")) // 6!
         .pipe(inspect)
     .filter(str => !/(a.a|b.b|x.x)...|...(a.a|b.b|x.x)/.test(str))
         .pipe(inspect)
+    .filter(str => !/.a..a.|.b..b.|.x..x./.test(str))
+        .pipe(inspect)
+    .filter(str => !/a.*b.*a.*b/.test(str))
+        .pipe(inspect)
+    //.filter()
 
 Deno.writeTextFile("result.txt", result.join("\n"))
