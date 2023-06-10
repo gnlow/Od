@@ -33,38 +33,25 @@ const rotStr = (str: string) =>
         ...str.slice(0, i),
     ].join(""))
 
-const rotate = 
-    (it: Iteruyo<string>) =>
-    it.flatMap(
-        (s: string) =>
-            new CartesianProduct(
-                rotStr(s.slice(0, 4)),
-                rotStr(s.slice(4, 8)),
-            )        
-    )
-    .map(x => x.join(""))
-
 const swap =
     (s: string) =>
-    [s, s.slice(4, 8) + s.slice(0, 4)]
+    [s, s.slice(s.length/2) + s.slice(0, s.length/2)].sort()[0]
 
 const result =
-$(new Permutation("aabbccxx")) // 8!
+$(new Permutation("aabbxx")) // 6!
     .map(chars => chars.join(""))
-        .pipe(undup)    // /2^4
+        .pipe(undup)    // /2^3
         .pipe(inspect)
     .map(norm)
-        .pipe(undup)    // /3!
+        .pipe(undup)    // /2!
         .pipe(inspect)
-    .map(
-        s => new CartesianProduct(
-            rotStr(s.slice(0, 4)),
-            rotStr(s.slice(4, 8)),
-        ).toArray()
-        .map(x => x.join(""))
-        .sort()[0]
-    )
-        .pipe(undup)    // 
+    .map(swap)
+        .pipe(undup)
+        .pipe(inspect)
+    .map(norm)
+        .pipe(undup)
+        .pipe(inspect)
+    .filter(str => !/(a.a|b.b|x.x)...|...(a.a|b.b|x.x)/.test(str))
         .pipe(inspect)
 
-Deno.writeTextFile("68.txt", result.join("\n"))
+Deno.writeTextFile("result.txt", result.join("\n"))
