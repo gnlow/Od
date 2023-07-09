@@ -1,3 +1,5 @@
+import { Vec2, vec2 } from "./Vec2.ts"
+
 type Controler = {
     move: () => void
     turnCW: () => void
@@ -5,16 +7,18 @@ type Controler = {
     push: () => void
     pop: () => void
 
-    pos: Vec2
-    dir: Vec2
+    getState(): {
+        pos: Vec2
+        dir: Vec2
+    }
 }
 
 const turtle = (turtle: (controler: Controler) => void) => {
-    let pos = c(0, 0)
-    const dir = c(-1, 0)
+    let pos = vec2(0, 0)
+    const dir = vec2(-1, 0)
 
     const move = () => {
-        pos = add(pos, dir)
+        pos = pos.add(dir)
     }
     
     const turnCW = () => {
@@ -34,8 +38,10 @@ const turtle = (turtle: (controler: Controler) => void) => {
     }
     
     const pop = () => {
-        drawLine(stack.pop()!, {pos, dir})
+        //drawLine(stack.pop()!, {pos, dir})
     }
+
+    const getState = () => ({pos, dir})
 
     turtle({
         move,
@@ -43,18 +49,9 @@ const turtle = (turtle: (controler: Controler) => void) => {
         turnCCW,
         push,
         pop,
-        pos,
-        dir,
+        getState,
     })
 }
-
-const c =
-    (x: number, y: number) =>
-    ({x, y})
-
-const add = (a: Vec2, b: Vec2) => c(a.x + b.x, a.y + b.y)
-
-type Vec2 = {x: number, y: number}
 type Point = {pos: Vec2, dir: Vec2}
 
 const stack: Point[] = []
@@ -64,24 +61,7 @@ const dirToArrow =
     ({x, y}: Vec2) =>
     "←↓↑→"[1.5*x + 0.5*y + 1.5]
 
-const lines: [Point, Point][] = []
-
 const copy = (object: any) => JSON.parse(JSON.stringify(object))
-
-const drawLine =
-    (from: Point, to: Point) => {
-        lines.push([copy(from), copy(to)])
-/*
-        const currPos = add(from.pos, from.dir)
-        const currDir = from.dir
-        while (true) {
-
-        }*/
-    }
-
-const posToCoord =
-    ({x, y}: Vec2) =>
-    `${x},${y}` as const
 
 class Grid<T> {
     data: Map<`${number},${number}`, T> = new Map()
@@ -89,18 +69,21 @@ class Grid<T> {
     }
 
     at(pos: Vec2) {
-        return this.data.get(posToCoord(pos))
+        return this.data.get(pos.toCoord())
     }
     set(pos: Vec2, value: T) {
-        this.data.set(posToCoord(pos), value)
+        this.data.set(pos.toCoord(), value)
     }
 }
 
-turtle(({move, turnCW, turnCCW, push, pop, pos, dir,}) => {
+turtle(({move, turnCW, turnCCW, push, pop, getState}) => {
+    const {pos, dir} = getState()
     const grid = new Grid<boolean>()
     grid.set(pos, true)
 
     for (const char of "((-)xx-)") {
+        const {pos, dir} = getState()
+        
         console.log(char, dirToArrow(dir), pos)
         if (char == "-") {
             push()
@@ -124,5 +107,5 @@ turtle(({move, turnCW, turnCCW, push, pop, pos, dir,}) => {
         }
     }
 
-    console.log(lines)
+    //console.log(lines)
 })
