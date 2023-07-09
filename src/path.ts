@@ -1,47 +1,6 @@
 import { Vec2, vec2 } from "./Vec2.ts"
+import { turtle } from "./turtle.ts"
 
-type TurtleControl = {
-    move: () => void
-    turnCW: () => void
-    turnCCW: () => void
-
-    getState(): TurtleState
-}
-
-type TurtleState = {
-    pos: Vec2
-    dir: Vec2
-}
-
-const turtle =
-    (turtle: (controler: TurtleControl) => void) =>
-    ({pos, dir}: TurtleState) =>
-    {
-        const move = () => {
-            pos = pos.add(dir)
-        }
-        
-        const turnCW = () => {
-            const {x, y} = dir
-            dir.x = y
-            dir.y = -x
-        }
-        
-        const turnCCW = () => {
-            const {x, y} = dir
-            dir.x = -y
-            dir.y = x
-        }
-
-        const getState = () => ({pos, dir})
-
-        turtle({
-            move,
-            turnCW,
-            turnCCW,
-            getState,
-        })
-    }
 type Point = {pos: Vec2, dir: Vec2}
 
 const dirToArrow =
@@ -63,30 +22,41 @@ class Grid<T> {
     }
 }
 
-turtle(({move, turnCW, turnCCW, getState}) => {
-    const {pos, dir} = getState()
+turtle(({move, turnCW, turnCCW, pos, dir,}) => {
     const grid = new Grid<boolean>()
-    grid.set(pos, true)
+    grid.set(pos(), true)
 
     
     const stack: Point[] = []
 
     const push = () => {
-        stack.push(copy({pos, dir}))
+        stack.push({pos: pos().copy(), dir: dir().copy()})
     }
     
     const pop = () => {
         //drawLine(stack.pop()!, {pos, dir})
+        const from = stack.pop()!
+
+        turtle(({move, turnCW, turnCCW, pos, dir,}) => {
+            while (0) {
+                turnCW()
+                move()
+                if (grid.at(pos())) {
+
+                }
+            }
+        })({
+            pos: from.pos.add(from.dir),
+            dir: from.dir
+        })
     }
 
     for (const char of "((-)xx-)") {
-        const {pos, dir} = getState()
-
-        console.log(char, dirToArrow(dir), pos)
+        console.log(char, dirToArrow(dir()), pos())
         if (char == "-") {
             push()
             move()
-            grid.set(pos, true)
+            grid.set(pos(), true)
             turnCW()
             turnCW()
             pop()

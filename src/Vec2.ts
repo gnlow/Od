@@ -12,6 +12,9 @@ export class Vec2 {
     toCoord() {
         return `${this.x},${this.y}` as const
     }
+    copy() {
+        return new Vec2(this.x, this.y)
+    }
 }
 
 export const vec2 = (x: number, y: number) => new Vec2(x, y)
