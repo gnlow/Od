@@ -20,11 +20,33 @@ class Grid<T> {
     set(pos: Vec2, value: T) {
         this.data.set(pos.toCoord(), value)
     }
+    render() {
+        const lines: string[] = []
+        const keys = [...this.data.keys()]
+        const minX = Math.min(...keys.map(key => +key.split(",")[0]))
+        const maxX = Math.max(...keys.map(key => +key.split(",")[0]))
+        const minY = Math.min(...keys.map(key => +key.split(",")[1]))
+        const maxY = Math.max(...keys.map(key => +key.split(",")[1]))
+        for (let y = minY; y <= maxY; y++) {
+            let line = ""
+            for (let x = minX; x <= maxX; x++) {
+                const pos = vec2(x, y)
+                const value = this.at(pos)
+                if (value) {
+                    line += value
+                } else {
+                    line += " "
+                }
+            }
+            lines.push(line)
+        }
+        return lines.reverse().join("\n")
+    }
 }
 
 turtle(({move, turnCW, turnCCW, pos, dir,}) => {
     const grid = new Grid<string>()
-    grid.set(pos(), dirToArrow(dir()))
+    grid.set(pos(), "o")
 
     
     const stack: Point[] = []
@@ -43,8 +65,8 @@ turtle(({move, turnCW, turnCCW, pos, dir,}) => {
                 return
             }
             console.log("    ", dirToArrow(dir()), pos()+"")
+            grid.set(pos(), dirToArrow(dir()))
             while (true) {
-                grid.set(pos(), dirToArrow(dir()))
                 turnCW()
                 move()
                 if (pos().eq(to.pos)) {
@@ -56,6 +78,7 @@ turtle(({move, turnCW, turnCCW, pos, dir,}) => {
                     move()
                 } else {
                     console.log("    ", dirToArrow(dir()), pos()+"")
+                    grid.set(pos(), dirToArrow(dir()))
                 }
             }
             console.log("    ", dirToArrow(dir()), pos()+"")
@@ -70,7 +93,7 @@ turtle(({move, turnCW, turnCCW, pos, dir,}) => {
         if (char == "-") {
             push()
             move()
-            grid.set(pos(), "*")
+            grid.set(pos(), "o")
             turnCW()
             turnCW()
             pop()
@@ -89,5 +112,5 @@ turtle(({move, turnCW, turnCCW, pos, dir,}) => {
         }
     }
 
-    //console.log(lines)
+    console.log(grid.render())
 })({pos: vec2(0, 0), dir: vec2(-1, 0)})
