@@ -1,3 +1,5 @@
+import { yellow } from "https://deno.land/std@0.193.0/fmt/colors.ts"
+
 export class Vec2 {
     x
     y
@@ -14,6 +16,13 @@ export class Vec2 {
     }
     copy() {
         return new Vec2(this.x, this.y)
+    }
+    eq(b: Vec2) {
+        return this.x == b.x && this.y == b.y
+    }
+    
+    [Symbol.toPrimitive]() {
+        return `(${yellow(this.x+"")}, ${yellow(this.y+"")})`
     }
 }
 

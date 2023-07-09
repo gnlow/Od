@@ -1,6 +1,7 @@
 {
   "version": "2",
   "remote": {
+    "https://deno.land/std@0.193.0/fmt/colors.ts": "d67e3cd9f472535241a8e410d33423980bec45047e343577554d3356e1f0ef4e",
     "https://deno.land/x/iteruyo@v0.2.0/mod.ts": "d1401a2c732d7686cd1d8f00413f08ffb62bbab82bc93e6c4edc10569d7de885",
     "https://esm.sh/react-dom@18.2.0/server": "63f7524eae2b0e5925c58dce636ca4c1cf640252d5ab67e700b266729dfe3297",
     "https://esm.sh/react@18.2.0/jsx-runtime": "8e5e22ae56773ef989a95772b9b9f6d4e5d7891f2d20875c25e51015df018f7c",

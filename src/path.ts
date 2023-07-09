@@ -23,8 +23,8 @@ class Grid<T> {
 }
 
 turtle(({move, turnCW, turnCCW, pos, dir,}) => {
-    const grid = new Grid<boolean>()
-    grid.set(pos(), true)
+    const grid = new Grid<string>()
+    grid.set(pos(), dirToArrow(dir()))
 
     
     const stack: Point[] = []
@@ -36,15 +36,29 @@ turtle(({move, turnCW, turnCCW, pos, dir,}) => {
     const pop = () => {
         //drawLine(stack.pop()!, {pos, dir})
         const from = stack.pop()!
+        const to = {pos: pos().copy(), dir: dir().copy()}
 
         turtle(({move, turnCW, turnCCW, pos, dir,}) => {
-            while (0) {
+            if (pos().eq(to.pos)) {
+                return
+            }
+            console.log("    ", dirToArrow(dir()), pos()+"")
+            while (true) {
+                grid.set(pos(), dirToArrow(dir()))
                 turnCW()
                 move()
+                if (pos().eq(to.pos)) {
+                    break
+                }
                 if (grid.at(pos())) {
-
+                    turnCW()
+                    turnCW()
+                    move()
+                } else {
+                    console.log("    ", dirToArrow(dir()), pos()+"")
                 }
             }
+            console.log("    ", dirToArrow(dir()), pos()+"")
         })({
             pos: from.pos.add(from.dir),
             dir: from.dir
@@ -52,11 +66,11 @@ turtle(({move, turnCW, turnCCW, pos, dir,}) => {
     }
 
     for (const char of "((-)xx-)") {
-        console.log(char, dirToArrow(dir()), pos())
+        console.log(char, dirToArrow(dir()), pos()+"")
         if (char == "-") {
             push()
             move()
-            grid.set(pos(), true)
+            grid.set(pos(), "*")
             turnCW()
             turnCW()
             pop()
