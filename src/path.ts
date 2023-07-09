@@ -1,45 +1,47 @@
 import { Vec2, vec2 } from "./Vec2.ts"
 
-type Controler = {
+type TurtleControl = {
     move: () => void
     turnCW: () => void
     turnCCW: () => void
 
-    getState(): {
-        pos: Vec2
-        dir: Vec2
-    }
+    getState(): TurtleState
 }
 
-const turtle = (turtle: (controler: Controler) => void) => {
-    let pos = vec2(0, 0)
-    const dir = vec2(-1, 0)
-
-    const move = () => {
-        pos = pos.add(dir)
-    }
-    
-    const turnCW = () => {
-        const {x, y} = dir
-        dir.x = y
-        dir.y = -x
-    }
-    
-    const turnCCW = () => {
-        const {x, y} = dir
-        dir.x = -y
-        dir.y = x
-    }
-
-    const getState = () => ({pos, dir})
-
-    turtle({
-        move,
-        turnCW,
-        turnCCW,
-        getState,
-    })
+type TurtleState = {
+    pos: Vec2
+    dir: Vec2
 }
+
+const turtle =
+    (turtle: (controler: TurtleControl) => void) =>
+    ({pos, dir}: TurtleState) =>
+    {
+        const move = () => {
+            pos = pos.add(dir)
+        }
+        
+        const turnCW = () => {
+            const {x, y} = dir
+            dir.x = y
+            dir.y = -x
+        }
+        
+        const turnCCW = () => {
+            const {x, y} = dir
+            dir.x = -y
+            dir.y = x
+        }
+
+        const getState = () => ({pos, dir})
+
+        turtle({
+            move,
+            turnCW,
+            turnCCW,
+            getState,
+        })
+    }
 type Point = {pos: Vec2, dir: Vec2}
 
 const dirToArrow =
@@ -104,4 +106,4 @@ turtle(({move, turnCW, turnCCW, getState}) => {
     }
 
     //console.log(lines)
-})
+})({pos: vec2(0, 0), dir: vec2(-1, 0)})
