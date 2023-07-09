@@ -4,8 +4,6 @@ type Controler = {
     move: () => void
     turnCW: () => void
     turnCCW: () => void
-    push: () => void
-    pop: () => void
 
     getState(): {
         pos: Vec2
@@ -33,29 +31,16 @@ const turtle = (turtle: (controler: Controler) => void) => {
         dir.y = x
     }
 
-    const push = () => {
-        stack.push(copy({pos, dir}))
-    }
-    
-    const pop = () => {
-        //drawLine(stack.pop()!, {pos, dir})
-    }
-
     const getState = () => ({pos, dir})
 
     turtle({
         move,
         turnCW,
         turnCCW,
-        push,
-        pop,
         getState,
     })
 }
 type Point = {pos: Vec2, dir: Vec2}
-
-const stack: Point[] = []
-
 
 const dirToArrow =
     ({x, y}: Vec2) =>
@@ -76,14 +61,25 @@ class Grid<T> {
     }
 }
 
-turtle(({move, turnCW, turnCCW, push, pop, getState}) => {
+turtle(({move, turnCW, turnCCW, getState}) => {
     const {pos, dir} = getState()
     const grid = new Grid<boolean>()
     grid.set(pos, true)
 
+    
+    const stack: Point[] = []
+
+    const push = () => {
+        stack.push(copy({pos, dir}))
+    }
+    
+    const pop = () => {
+        //drawLine(stack.pop()!, {pos, dir})
+    }
+
     for (const char of "((-)xx-)") {
         const {pos, dir} = getState()
-        
+
         console.log(char, dirToArrow(dir), pos)
         if (char == "-") {
             push()
