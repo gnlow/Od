@@ -1,4 +1,5 @@
 import { Vec2, vec2 } from "./Vec2.ts"
+import { Grid } from "./Grid.ts"
 import { turtle } from "./turtle.ts"
 
 type Point = {pos: Vec2, dir: Vec2}
@@ -10,44 +11,9 @@ const dirToCorner =
     ({x, y}: Vec2) =>
     "╯╮╰╭"[1.5*x + 0.5*y + 1.5]
 
-const copy = (object: any) => JSON.parse(JSON.stringify(object))
 
-class Grid<T> {
-    data: Map<`${number},${number}`, T> = new Map()
-    consturctor() {
-    }
 
-    at(pos: Vec2) {
-        return this.data.get(pos.toCoord())
-    }
-    set(pos: Vec2, value: T) {
-        this.data.set(pos.toCoord(), value)
-    }
-    render() {
-        const lines: string[] = []
-        const keys = [...this.data.keys()]
-        const minX = Math.min(...keys.map(key => +key.split(",")[0]))
-        const maxX = Math.max(...keys.map(key => +key.split(",")[0]))
-        const minY = Math.min(...keys.map(key => +key.split(",")[1]))
-        const maxY = Math.max(...keys.map(key => +key.split(",")[1]))
-        for (let y = minY; y <= maxY; y++) {
-            let line = ""
-            for (let x = minX; x <= maxX; x++) {
-                const pos = vec2(x, y)
-                const value = this.at(pos)
-                if (value) {
-                    line += value
-                } else {
-                    line += " "
-                }
-            }
-            lines.push(line)
-        }
-        return lines.reverse().join("\n")
-    }
-}
-
-turtle(({move, turnCW, turnCCW, pos, dir,}) => {
+turtle(({move, turnCW, pos, dir,}) => {
     const grid = new Grid<string>()
     
     const stack: Point[] = []
@@ -57,11 +23,10 @@ turtle(({move, turnCW, turnCCW, pos, dir,}) => {
     }
     
     const pop = () => {
-        //drawLine(stack.pop()!, {pos, dir})
         const from = stack.pop()!
         const to = {pos: pos().copy(), dir: dir().copy()}
 
-        turtle(({move, turnCW, turnCCW, pos, dir,}) => {
+        turtle(({move, turnCW, pos, dir,}) => {
             if (pos().eq(to.pos)) {
                 return
             }

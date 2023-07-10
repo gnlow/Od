@@ -1,4 +1,4 @@
-import { Vec2, vec2 } from "./Vec2.ts"
+import { Vec2 } from "./Vec2.ts"
 
 export type TurtleControl = {
     move: () => void
