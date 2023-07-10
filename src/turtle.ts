@@ -15,7 +15,7 @@ export type TurtleState = {
 }
 
 export const turtle =
-    (turtle: (controler: TurtleControl) => void) =>
+    <T>(turtle: (controler: TurtleControl) => T) =>
     ({pos, dir}: TurtleState) =>
     {
         const move = () => {
@@ -34,7 +34,7 @@ export const turtle =
             dir.y = x
         }
 
-        turtle({
+        return turtle({
             move,
             turnCW,
             turnCCW,
