@@ -5,7 +5,10 @@ type Point = {pos: Vec2, dir: Vec2}
 
 const dirToArrow =
     ({x, y}: Vec2) =>
-    "←↓↑→"[1.5*x + 0.5*y + 1.5]
+    "─││─"[1.5*x + 0.5*y + 1.5]
+const dirToCorner =
+    ({x, y}: Vec2) =>
+    "╯╮╰╭"[1.5*x + 0.5*y + 1.5]
 
 const copy = (object: any) => JSON.parse(JSON.stringify(object))
 
@@ -46,8 +49,6 @@ class Grid<T> {
 
 turtle(({move, turnCW, turnCCW, pos, dir,}) => {
     const grid = new Grid<string>()
-    grid.set(pos(), "o")
-
     
     const stack: Point[] = []
 
@@ -64,10 +65,12 @@ turtle(({move, turnCW, turnCCW, pos, dir,}) => {
             if (pos().eq(to.pos)) {
                 return
             }
+            let turn = 1
+
             console.log("    ", dirToArrow(dir()), pos()+"")
-            grid.set(pos(), dirToArrow(dir()))
             while (true) {
                 turnCW()
+                grid.set(pos(), turn != 0 ? dirToCorner(dir()) : dirToArrow(dir()))
                 move()
                 if (pos().eq(to.pos)) {
                     break
@@ -76,9 +79,10 @@ turtle(({move, turnCW, turnCCW, pos, dir,}) => {
                     turnCW()
                     turnCW()
                     move()
+                    turn = 0
                 } else {
-                    console.log("    ", dirToArrow(dir()), pos()+"")
-                    grid.set(pos(), dirToArrow(dir()))
+                    console.log("    ", dirToArrow(dir()), pos()+"", turn)
+                    turn += 1
                 }
             }
             console.log("    ", dirToArrow(dir()), pos()+"")
@@ -93,7 +97,7 @@ turtle(({move, turnCW, turnCCW, pos, dir,}) => {
         if (char == "-") {
             push()
             move()
-            grid.set(pos(), "o")
+            grid.set(pos(), "┼")
             turnCW()
             turnCW()
             pop()
