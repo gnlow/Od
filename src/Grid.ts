@@ -26,7 +26,7 @@ export class Grid<T> {
                 if (value) {
                     line += value
                 } else {
-                    line += " "
+                    line += "   "
                 }
             }
             lines.push(line)

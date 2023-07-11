@@ -6,10 +6,10 @@ type Point = {pos: Vec2, dir: Vec2}
 
 const dirToArrow =
     ({x, y}: Vec2) =>
-    "─││─"[1.5*x + 0.5*y + 1.5]
+    ["───"," │ "," │ ","───"][1.5*x + 0.5*y + 1.5]
 const dirToCorner =
     ({x, y}: Vec2) =>
-    "╯╮╰╭"[1.5*x + 0.5*y + 1.5]
+    ["─╯ ","─╮ "," ╰─"," ╭─"][1.5*x + 0.5*y + 1.5]
 
 export function path(
     code: string,
@@ -59,12 +59,13 @@ export function path(
             })
         }
     
+        grid.set(pos(), "─┼─")
         for (const char of code) {
             log(char, dirToArrow(dir()), pos()+"")
             if (char == "-") {
                 push()
                 move()
-                grid.set(pos(), "┼")
+                grid.set(pos(), "─┼─")
                 turnCW()
                 turnCW()
                 pop()

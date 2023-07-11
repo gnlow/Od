@@ -1,3 +1,3 @@
 import { path } from "../src/path.ts"
 
-console.log(path("((-)xx-)").render())
+console.log(path("((x-)x)").render())
