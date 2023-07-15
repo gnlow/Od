@@ -38,7 +38,7 @@ export const turtle =
             move,
             turnCW,
             turnCCW,
-            pos: () => pos,
-            dir: () => dir,
+            pos: () => pos.copy(),
+            dir: () => dir.copy(),
         })
     }

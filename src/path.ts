@@ -4,12 +4,14 @@ import { turtle } from "./turtle.ts"
 
 type Point = {pos: Vec2, dir: Vec2}
 
-const dirToArrow =
-    ({x, y}: Vec2) =>
-    ["───"," │ "," │ ","─►─"][1.5*x + 0.5*y + 1.5]
-const dirToCorner =
-    ({x, y}: Vec2) =>
-    ["─╯ ","─╮ "," ╰─"," ╭─"][1.5*x + 0.5*y + 1.5]
+const dirToStr =
+    ({x, y}: Vec2, turn: number) =>
+    [
+        ["───"," │ "," │ ","─►─"],
+        ["─╯ ","─╮ "," ╰─"," ╭─"],
+        ["───"," │ "," │ ","─►─"],
+        ["─╮ "," ╭─","─╯ "," ╰─"],
+    ][turn % 4][1.5*x + 0.5*y + 1.5]
 
 export function path(
     code: string,
@@ -32,12 +34,15 @@ export function path(
                 if (pos().eq(to.pos)) {
                     return
                 }
-                let turn = 1
+                let turn = 0
+                let prevDir = dir()
     
-                log("    ", dirToArrow(dir()), pos()+"")
+                log("    ", dirToStr(dir(), 0), pos()+"")
                 while (true) {
                     turnCW()
-                    grid.set(pos(), turn != 0 ? dirToCorner(dir()) : dirToArrow(dir()))
+                    turn += 1
+                    log(prevDir, dir(), turn % 4)
+                    grid.set(pos(), dirToStr(dir(), turn))
                     move()
                     log(grid.render())
                     if (pos().eq(to.pos) && dir().eq(to.dir.reverse())) {
@@ -46,14 +51,16 @@ export function path(
                     if (grid.at(pos())) {
                         turnCW()
                         turnCW()
+                        turn += 2
                         move()
-                        turn = 0
                     } else {
                         //log("    ", dirToArrow(dir()), pos()+"", turn)
-                        turn += 1
+                        prevDir = dir()
+                        log(prevDir)
+                        turn = 0
                     }
                 }
-                log("    ", dirToArrow(dir()), pos()+"")
+                log("    ", dirToStr(dir(), 0), pos()+"")
             })({
                 pos: from.pos.add(from.dir),
                 dir: from.dir
@@ -62,7 +69,7 @@ export function path(
     
         grid.set(pos(), "─┼─")
         for (const char of code) {
-            log(char, dirToArrow(dir()), pos()+"")
+            log(char, dirToStr(dir(), 0), pos()+"")
             if (char == "-") {
                 push()
                 move()
