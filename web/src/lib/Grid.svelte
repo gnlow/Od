@@ -7,14 +7,14 @@
 
 <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 {grid.width} {grid.height}"
+    viewBox="{grid.minX} {-grid.maxY} {grid.width} {grid.height}"
     {...$$restProps}
 >
     {#each grid.traverse() as {pos: {x, y}, value}}
         <Pixel
             code={value}
-            x={grid.minX+x}
-            y={grid.maxY-y}
+            x={x}
+            y={-y}
         />
     {/each}
 </svg>
