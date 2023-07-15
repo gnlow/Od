@@ -1,20 +1,43 @@
 <script lang="ts">
+    import { tweened } from "svelte/motion"
+    import { cubicOut } from "svelte/easing"
+
     import type { Grid } from "$lib"
     import Pixel from "./Pixel.svelte"
 
     export let grid: Grid<string>
+
+    const tweenOption = {
+        duration: 400,
+        easing: cubicOut,
+    }
+    const minX = tweened(0, tweenOption)
+    const maxY = tweened(0, tweenOption)
+    const width = tweened(0, tweenOption)
+    const height = tweened(0, tweenOption)
+
+    $: grid, (() => {
+        minX.set(grid.minX)
+        maxY.set(grid.maxY)
+        width.set(grid.width)
+        height.set(grid.height)
+    })()
 </script>
 
 <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="{grid.minX} {-grid.maxY} {grid.width} {grid.height}"
+    viewBox="{$minX} {-$maxY} {$width} {$height}"
     {...$$restProps}
 >
-    {#each grid.traverse() as {pos: {x, y}, value}}
+    {#each
+        grid.traverse()
+        as {pos, value}
+        (pos+"")
+    }
         <Pixel
             code={value}
-            x={x}
-            y={-y}
+            x={pos.x}
+            y={-pos.y}
         />
     {/each}
 </svg>
