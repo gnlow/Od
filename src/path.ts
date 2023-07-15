@@ -6,7 +6,7 @@ type Point = {pos: Vec2, dir: Vec2}
 
 const dirToArrow =
     ({x, y}: Vec2) =>
-    ["───"," │ "," │ ","───"][1.5*x + 0.5*y + 1.5]
+    ["───"," │ "," │ ","─►─"][1.5*x + 0.5*y + 1.5]
 const dirToCorner =
     ({x, y}: Vec2) =>
     ["─╯ ","─╮ "," ╰─"," ╭─"][1.5*x + 0.5*y + 1.5]
@@ -39,7 +39,8 @@ export function path(
                     turnCW()
                     grid.set(pos(), turn != 0 ? dirToCorner(dir()) : dirToArrow(dir()))
                     move()
-                    if (pos().eq(to.pos)) {
+                    log(grid.render())
+                    if (pos().eq(to.pos) && dir().eq(to.dir.reverse())) {
                         break
                     }
                     if (grid.at(pos())) {
@@ -48,7 +49,7 @@ export function path(
                         move()
                         turn = 0
                     } else {
-                        log("    ", dirToArrow(dir()), pos()+"", turn)
+                        //log("    ", dirToArrow(dir()), pos()+"", turn)
                         turn += 1
                     }
                 }
@@ -84,7 +85,7 @@ export function path(
             }
         }
     
-        log(grid.render())
+        //log(grid.render())
 
         return grid
     })({pos: vec2(0, 0), dir: vec2(-1, 0)})

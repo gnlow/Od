@@ -20,6 +20,12 @@ export class Vec2 {
     eq(b: Vec2) {
         return this.x == b.x && this.y == b.y
     }
+    reverse() {
+        return new Vec2(-this.x, -this.y)
+    }
+    turnCW() {
+        return new Vec2(this.y, -this.x)
+    }
     
     [Symbol.toPrimitive]() {
         return `(${yellow(this.x+"")}, ${yellow(this.y+"")})`
