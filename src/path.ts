@@ -7,9 +7,9 @@ type Point = {pos: Vec2, dir: Vec2}
 const dirToStr =
     ({x, y}: Vec2, turn: number) =>
     [
-        ["───"," │ "," │ ","─►─"],
+        ["───"," │ "," │ ","───"],
         ["─╯ ","─╮ "," ╰─"," ╭─"],
-        ["───"," │ "," │ ","─►─"],
+        ["───"," │ "," │ ","───"],
         ["─╮ "," ╭─","─╯ "," ╰─"],
     ][turn % 4][1.5*x + 0.5*y + 1.5]
 
@@ -35,13 +35,11 @@ export function path(
                     return
                 }
                 let turn = 0
-                let prevDir = dir()
     
                 log("    ", dirToStr(dir(), 0), pos()+"")
                 while (true) {
                     turnCW()
                     turn += 1
-                    log(prevDir, dir(), turn % 4)
                     grid.set(pos(), dirToStr(dir(), turn))
                     move()
                     log(grid.render())
@@ -54,9 +52,6 @@ export function path(
                         turn += 2
                         move()
                     } else {
-                        //log("    ", dirToArrow(dir()), pos()+"", turn)
-                        prevDir = dir()
-                        log(prevDir)
                         turn = 0
                     }
                 }
@@ -91,8 +86,6 @@ export function path(
                 turnCW()
             }
         }
-    
-        //log(grid.render())
 
         return grid
     })({pos: vec2(0, 0), dir: vec2(-1, 0)})

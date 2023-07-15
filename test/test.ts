@@ -26,6 +26,6 @@ const t23 =
 ((x-)x)`
 .split("\n")
 
-;["(-x()-x)"].forEach(code => {
-    console.log(path(code, console.log).render())
+;t23.forEach(code => {
+    console.log(path(code).render())
 })
