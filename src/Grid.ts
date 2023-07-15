@@ -11,16 +11,34 @@ export class Grid<T> {
     set(pos: Vec2, value: T) {
         this.data.set(pos.toCoord(), value)
     }
+
+    get coords() {
+        return [...this.data.keys()].map(Vec2.fromString)
+    }
+    get minX() {
+        return Math.min(...this.coords.map(({x}) => x))
+    }
+    get maxX() {
+        return Math.max(...this.coords.map(({x}) => x))
+    }
+    get minY() {
+        return Math.min(...this.coords.map(({y}) => y))
+    }
+    get maxY() {
+        return Math.max(...this.coords.map(({y}) => y))
+    }
+    get width() {
+        return this.maxX - this.minX + 1
+    }
+    get height() {
+        return this.maxY - this.minY + 1
+    }
+
     render() {
         const lines: string[] = []
-        const keys = [...this.data.keys()]
-        const minX = Math.min(...keys.map(key => +key.split(",")[0]))
-        const maxX = Math.max(...keys.map(key => +key.split(",")[0]))
-        const minY = Math.min(...keys.map(key => +key.split(",")[1]))
-        const maxY = Math.max(...keys.map(key => +key.split(",")[1]))
-        for (let y = minY; y <= maxY; y++) {
+        for (let y = this.minY; y <= this.maxY; y++) {
             let line = ""
-            for (let x = minX; x <= maxX; x++) {
+            for (let x = this.minX; x <= this.maxX; x++) {
                 const pos = vec2(x, y)
                 const value = this.at(pos)
                 if (value) {
@@ -32,5 +50,16 @@ export class Grid<T> {
             lines.push(line)
         }
         return lines.reverse().join("\n")
+    }
+    *traverse() {
+        for (let y = this.minY; y <= this.maxY; y++) {
+            for (let x = this.minX; x <= this.maxX; x++) {
+                const pos = vec2(x, y)
+                const value = this.at(pos)
+                if (value) {
+                    yield {value, pos}
+                }
+            }
+        }
     }
 }

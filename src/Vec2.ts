@@ -28,6 +28,10 @@ export class Vec2 {
     [Symbol.toPrimitive]() {
         return `(${this.x}, ${this.y})`
     }
+    static fromString(str: string) {
+        const [x, y] = str.split(",").map(Number)
+        return new Vec2(x, y)
+    }
 }
 
 export const vec2 = (x: number, y: number) => new Vec2(x, y)

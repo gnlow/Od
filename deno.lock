@@ -18,11 +18,16 @@
   },
   "npm": {
     "specifiers": {
-      "js-combinatorics": "js-combinatorics@2.1.1"
+      "js-combinatorics": "js-combinatorics@2.1.1",
+      "lodash": "lodash@4.17.21"
     },
     "packages": {
       "js-combinatorics@2.1.1": {
         "integrity": "sha512-jKLV+oIyz0TCr7GBhyuOwngntu1rCxSO+lbVTS232HYowA13CTk0RSmPq6nuXGLFaq2ZWLDQqEwJ6LCDnYR0+A==",
+        "dependencies": {}
+      },
+      "lodash@4.17.21": {
+        "integrity": "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==",
         "dependencies": {}
       }
     }

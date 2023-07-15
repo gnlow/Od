@@ -17,6 +17,7 @@ export function path(
     code: string,
     log: (...args: unknown[]) => void = () => {},
 ) {
+    try {
     return turtle(({move, turnCW, pos, dir,}) => {
         const grid = new Grid<string>()
         
@@ -66,12 +67,14 @@ export function path(
         for (const char of code) {
             log(char, dirToStr(dir(), 0), pos()+"")
             if (char == "-") {
-                push()
                 move()
+                /*
+                grid.set(pos(), dirToStr(dir(), 0))
+                move()
+                */
                 grid.set(pos(), "─┼─")
                 turnCW()
                 turnCW()
-                pop()
                 turnCW()
             } else {
                 if (char == "(") {
@@ -89,4 +92,7 @@ export function path(
 
         return grid
     })({pos: vec2(0, 0), dir: vec2(-1, 0)})
+    } catch {
+        return new Grid<string>()
+    }
 }
