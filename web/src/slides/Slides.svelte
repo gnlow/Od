@@ -9,6 +9,7 @@
     import encode from "./encode.svelte"
     import cards1 from "./cards1.svelte"
     import cards2 from "./cards2.svelte"
+    import limit from "./limit.svelte"
 
     const slides = [
         title,
@@ -18,6 +19,7 @@
         encode,
         cards1,
         cards2,
+        limit,
     ]
 </script>
 
