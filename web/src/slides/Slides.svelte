@@ -6,6 +6,7 @@
     import doodle from "./doodle.svelte"
     import def from "./def.svelte"
     import feature from "./feature.svelte"
+    import encode from "./encode.svelte"
     import cards from "./cards.svelte"
 
     const slides = [
@@ -13,6 +14,7 @@
         doodle,
         def,
         feature,
+        encode,
         cards,
     ]
 </script>

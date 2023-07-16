@@ -40,7 +40,6 @@
         font-family: "JetBrains Mono", monospace;
         color: var(--theme-dark);
         width: 10rem;
-        word-break: break-all;
         resize: none;
         height: 1.5em;
     }
