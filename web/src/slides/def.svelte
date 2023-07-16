@@ -1,7 +1,3 @@
-<script>
-    import Card from "$lib/Card.svelte"
-</script>
-
 <style>
     h2 {
         font-size: 5rem;
@@ -30,5 +26,3 @@
         그래프의 연결성이 같더라도 공간 구조가 다르면 다른 것으로 취급
     </li>
 </ul>
-
-<Card code="x(-(--)x-)((--))-(-)"/>

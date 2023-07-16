@@ -5,12 +5,14 @@
     import title from "./title.svelte"
     import doodle from "./doodle.svelte"
     import def from "./def.svelte"
+    import feature from "./feature.svelte"
     import cards from "./cards.svelte"
 
     const slides = [
         title,
         doodle,
         def,
+        feature,
         cards,
     ]
 </script>
