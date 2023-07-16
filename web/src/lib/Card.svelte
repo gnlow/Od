@@ -3,9 +3,7 @@
     import Grid from "$lib/Grid.svelte"
     import { hash } from "$lib/hash"
 
-    let code = "(x-)x(-)"
-
-    $: code, console.log(Math.round(hash(code)*100))
+    export let code = ""
 </script>
 
 <style>
@@ -47,12 +45,14 @@
 </style>
 
 <card
-    style:--hash={hash(code)}
+    style:--hash={hash(code.slice(1))}
 >
     <Grid
         grid={path(code)}
-        width="10rem"
-        height="10rem"
+        style="
+            width: 10rem;
+            height: 10rem;
+        "
         color="var(--theme-dark)"
     />
     <textarea bind:value={code} />
