@@ -7,6 +7,8 @@
 
     export let grid: Grid<string>
 
+    export let color: string
+
     const tweenOption = {
         duration: 400,
         easing: cubicOut,
@@ -38,6 +40,7 @@
             code={value}
             x={pos.x}
             y={-pos.y}
+            {color}
         />
     {/each}
 </svg>

@@ -32,9 +32,6 @@ export function path(
             const to = {pos: pos().copy(), dir: dir().copy()}
     
             turtle(({move, turnCW, pos, dir,}) => {
-                if (pos().eq(to.pos)) {
-                    return
-                }
                 let turn = 0
     
                 log("    ", dirToStr(dir(), 0), pos()+"")

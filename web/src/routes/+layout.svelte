@@ -1,0 +1,5 @@
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap');
+</style>
+
+<slot/>

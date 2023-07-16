@@ -3,6 +3,7 @@
     export let stroke = 0.5
     export let x: number
     export let y: number
+    export let color: string
 
 </script>
 
@@ -14,14 +15,10 @@
     .╰─  {d: path("M 0.5 0 A 0.5 0.5 90 0 0 1 0.5")}
     .╭─  {d: path("M 1 0.5 A 0.5 0.5 180 0 0 0.5 1")}
     .─╮  {d: path("M 0.5 1 A 0.5 0.5 270 0 0 0 0.5")}
-    
-    path {
-        transition: 0.4s;
-    }
 </style>
 
 <path
-    stroke="black"
+    stroke={color}
     fill="none"
     stroke-width={stroke}
     transform="translate({x}, {y})"
