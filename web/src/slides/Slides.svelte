@@ -10,6 +10,8 @@
     import cards1 from "./cards1.svelte"
     import cards2 from "./cards2.svelte"
     import limit from "./limit.svelte"
+    import feel from "./feel.svelte"
+    import end from "./end.svelte"
 
     const slides = [
         title,
@@ -20,6 +22,8 @@
         cards1,
         cards2,
         limit,
+        feel,
+        end,
     ]
 </script>
 

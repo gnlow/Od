@@ -48,6 +48,7 @@
 <card
     style:--hash={hash(code.slice(1))}
     {...$$restProps}
+    on:click
 >
     <Grid
         grid={path(code)}
