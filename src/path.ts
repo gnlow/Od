@@ -13,10 +13,17 @@ const dirToStr =
         ["─╮ "," ╭─","─╯ "," ╰─"],
     ][turn % 4][1.5*x + 0.5*y + 1.5]
 
+const codeNormalize =
+    (code: string) => {
+        const start = code.indexOf("(")
+        return code.slice(start) + code.slice(0, start)
+    }
+
 export function path(
     code: string,
     log: (...args: unknown[]) => void = () => {},
 ) {
+    code = codeNormalize(code)
     try {
     return turtle(({move, turnCW, pos, dir,}) => {
         const grid = new Grid<string>()
