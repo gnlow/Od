@@ -1,15 +1,15 @@
 <style>
     slide {
-        height: 100vh;
+        height: calc(100vh - 8rem);
         display: flex;
         align-items: left;
         flex-direction: column;
-        justify-content: safe center;
+        justify-content: flex-start;
 
         scroll-snap-align: start;
         overflow-y: scroll;
 
-        padding: 2rem;
+        padding: 4rem;
     }
 </style>
 

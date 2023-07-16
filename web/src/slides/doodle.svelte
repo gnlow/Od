@@ -9,9 +9,17 @@
     img {
         width: 20rem;
     }
+    div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100%;
+    }
 </style>
 
-<Center>
-    <img alt="()xx" src={doodle1}/>
-    <img alt="(xx)" src={doodle2}/>    
-</Center>
+<div>
+    <Center>
+        <img alt="()xx" src={doodle1}/>
+        <img alt="(xx)" src={doodle2}/>    
+    </Center>
+</div>
