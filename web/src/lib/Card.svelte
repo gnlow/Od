@@ -3,7 +3,7 @@
     import Grid from "$lib/Grid.svelte"
     import { hash } from "$lib/hash"
 
-    let code = "x(-(--)x-)((--))-(-)"
+    let code = "(x-)x(-)"
 
     $: code, console.log(Math.round(hash(code)*100))
 </script>
@@ -31,7 +31,7 @@
 
         border-radius: 0.5rem;
     }
-    input {
+    textarea {
         background: none;
         border: none;
         border-bottom: 3px solid var(--theme-dark);
@@ -39,6 +39,10 @@
         font-size: 2rem;
         font-family: "JetBrains Mono", monospace;
         color: var(--theme-dark);
+        width: 10rem;
+        word-wrap: break-word;
+        resize: none;
+        height: 1.5em;
     }
 </style>
 
@@ -47,9 +51,9 @@
 >
     <Grid
         grid={path(code)}
-        width="100px"
-        height="100px"
+        width="10rem"
+        height="10rem"
         color="var(--theme-dark)"
     />
-    <input bind:value={code} />
+    <textarea bind:value={code} />
 </card>
