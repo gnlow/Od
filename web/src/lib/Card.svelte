@@ -28,12 +28,11 @@
         background-color: var(--theme-light);
 
         border-radius: 0.5rem;
-        border: 1px solid rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(48 46 49 / 0.1);box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
     }
     textarea {
         background: none;
         border: none;
-        border-bottom: 3px solid var(--theme-dark);
         outline: none;
         font-size: 2rem;
         font-family: "JetBrains Mono", monospace;

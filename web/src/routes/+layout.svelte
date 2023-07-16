@@ -1,5 +1,14 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&display=swap');
+
+    @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css");
+
+    :global(body) {
+        margin: 0;
+        font-family: "Pretendard", sans-serif;
+        background-color: #f8f8fd;
+        color: #302e31;
+    }
 </style>
 
 <slot/>
