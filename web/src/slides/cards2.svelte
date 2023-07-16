@@ -22,11 +22,12 @@
         margin: 0.5rem 0;
     }
     cards {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
+        display: grid;
         gap: 1rem;
         justify-content: center;
+        grid-template: repeat(2, 1fr) / repeat(6, 1fr);
+        grid-auto-flow: column;
+        grid-template-columns: min-content auto;
     }
 </style>
 
