@@ -1,7 +1,8 @@
-<script lang="ts">
+<script>
     import { path } from "$lib"
     import Grid from "$lib/Grid.svelte"
     import { hash } from "$lib/hash"
+    import autosize from "svelte-autosize"
 
     export let code = ""
 </script>
@@ -13,6 +14,7 @@
         padding: 1rem;
         align-items: center;
         width: fit-content;
+        gap: 1rem;
 
         --theme-light: hsl(
             calc(var(--hash) * 360)
@@ -38,7 +40,7 @@
         font-family: "JetBrains Mono", monospace;
         color: var(--theme-dark);
         width: 10rem;
-        word-wrap: break-word;
+        word-break: break-all;
         resize: none;
         height: 1.5em;
     }
@@ -46,6 +48,7 @@
 
 <card
     style:--hash={hash(code.slice(1))}
+    {...$$restProps}
 >
     <Grid
         grid={path(code)}
@@ -55,5 +58,5 @@
         "
         color="var(--theme-dark)"
     />
-    <textarea bind:value={code} />
+    <textarea bind:value={code} use:autosize />
 </card>
