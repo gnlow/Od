@@ -17,7 +17,7 @@
 
         --theme-light: hsl(
             calc(var(--hash) * 360)
-            50%
+            70%
             80%
         );
         --theme-dark: hsl(
@@ -28,6 +28,7 @@
         background-color: var(--theme-light);
 
         border-radius: 0.5rem;
+        border: 1px solid rgba(0, 0, 0, 0.3);
     }
     textarea {
         background: none;

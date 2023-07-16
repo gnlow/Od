@@ -41,6 +41,7 @@
             x={pos.x}
             y={-pos.y}
             {color}
+            stroke={Math.max($width, $height)/20}
         />
     {/each}
 </svg>
