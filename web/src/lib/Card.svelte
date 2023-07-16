@@ -13,7 +13,6 @@
         padding: 1rem;
         align-items: center;
         width: fit-content;
-        gap: 1rem;
 
         --theme-light: hsl(
             calc(var(--hash) * 360)

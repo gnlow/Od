@@ -4,9 +4,18 @@
 </script>
 
 <style>
+    div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1rem;
+    }
     img {
-        width: 50rem;
+        width: 20rem;
     }
 </style>
 
-<img alt="()xx" src={doodle1}/>
+<div>
+    <img alt="()xx" src={doodle1}/>
+    <img alt="(xx)" src={doodle2}/>    
+</div>

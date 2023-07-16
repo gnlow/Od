@@ -2,14 +2,14 @@
     slide {
         height: 100vh;
         display: flex;
-        align-items: center;
+        align-items: left;
         flex-direction: column;
         justify-content: safe center;
 
         scroll-snap-align: start;
         overflow-y: scroll;
 
-        padding: 1rem;
+        padding: 2rem;
     }
 </style>
 
