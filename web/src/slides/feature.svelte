@@ -29,8 +29,8 @@
         grid={path("x(-(--)x-)((--))-(-)")}
         color="black"
         style="
-            width: 50rem;
-            height: 50rem;
+            width: 20rem;
+            height: 20rem;
         "
     />
 </Center>
