@@ -14,9 +14,11 @@ const dirToStr =
     ][turn % 4][1.5*x + 0.5*y + 1.5]
 
 const codeNormalize =
-    (code: string) => {
+    (code: string): string => {
         const start = code.indexOf("(")
-        return code.slice(start) + code.slice(0, start)
+		const result = code.slice(start) + code.slice(0, start)
+		if (/^[^(]*\([^()]*\)[^()]*\)/.test(result)) return codeNormalize(code.slice(1) + code.slice(0, 1))
+        return result
     }
 
 export function path(
