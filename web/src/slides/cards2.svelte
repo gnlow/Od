@@ -1,8 +1,29 @@
 <script lang="ts">
     import Card from "$lib/Card.svelte"
-    const cards =
-`x()x
-(xx)`
+    const t23 =
+`(-x()-x)
+(-()x-x)
+((-)xx-)
+((-xx)-)
+(-)x(-x)
+(x-()x-)
+(-x()-x)
+(-xx(-))
+(-(xx-))
+(x-)x(-)
+()-x()-x
+()x-x()
+()(-)xx
+()(-xx)
+()x-()x
+()-xx(-)
+(xx-)()
+(xx-())
+(-())-xx
+(x(-x))
+(()-xx)
+(()-)xx
+((x-)x)`
 .split("\n")
 </script>
 
@@ -20,10 +41,10 @@
     }
 </style>
 
-<h2>n = 1</h2>
+<h2>n = 2</h2>
 
 <cards>
-    {#each cards as code}
+    {#each t23 as code}
         <Card {code}/>
     {/each}
 </cards>

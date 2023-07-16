@@ -7,8 +7,8 @@
     import def from "./def.svelte"
     import feature from "./feature.svelte"
     import encode from "./encode.svelte"
+    import cards1 from "./cards1.svelte"
     import cards2 from "./cards2.svelte"
-    import cards from "./cards.svelte"
 
     const slides = [
         title,
@@ -16,8 +16,8 @@
         def,
         feature,
         encode,
+        cards1,
         cards2,
-        cards,
     ]
 </script>
 
