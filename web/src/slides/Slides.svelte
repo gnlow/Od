@@ -12,6 +12,7 @@
     import limit from "./8_limit.svelte"
     import feel from "./9_feel.svelte"
     import end from "./10_end.svelte"
+    import transform from "./11_transform.svelte"
 
     const slides = [
         title,
@@ -24,6 +25,7 @@
         limit,
         feel,
         end,
+        transform,
     ]
 </script>
 
