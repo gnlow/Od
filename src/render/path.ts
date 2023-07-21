@@ -1,6 +1,7 @@
 import { Vec2, vec2 } from "./Vec2.ts"
 import { Grid } from "./Grid.ts"
 import { turtle } from "./turtle.ts"
+import { codeNormalize } from "../code/mod.ts"
 
 type Point = {pos: Vec2, dir: Vec2}
 
@@ -12,14 +13,6 @@ const dirToStr =
         ["───"," │ "," │ ","───"],
         ["─╮ "," ╭─","─╯ "," ╰─"],
     ][turn % 4][1.5*x + 0.5*y + 1.5]
-
-const codeNormalize =
-    (code: string): string => {
-        const start = code.indexOf("(")
-		const result = code.slice(start) + code.slice(0, start)
-		if (/^[^(]*\([^()]*\)[^()]*\)/.test(result)) return codeNormalize(code.slice(1) + code.slice(0, 1))
-        return result
-    }
 
 export function path(
     code: string,
