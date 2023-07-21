@@ -1,4 +1,4 @@
-import { assertEquals } from "https://deno.land/std@0.195.0/assert/mod.ts"
+import { assertEquals } from "../deps.ts"
 
 import { path } from "../src/render/path.ts"
 

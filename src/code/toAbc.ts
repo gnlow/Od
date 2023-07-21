@@ -5,7 +5,7 @@ const toLower = (n: number) => String.fromCharCode("a".charCodeAt(0) + n)
 const toUpper = (n: number) => String.fromCharCode("A".charCodeAt(0) + n)
 const toPoint = (n: number) => String.fromCharCode("0".charCodeAt(0) + n)
 
-const toAbc = (code: string) =>
+export const toAbc = (code: string) =>
     turtle(({move, turnCW, pos,}) => {
         const grid = new Grid<string[]>()
         let i = -1
@@ -39,5 +39,3 @@ const toAbc = (code: string) =>
         })(code)
         return grid.getPoints().map(({value}) => value)
     })({pos: vec2(0, 0), dir: vec2(-1, 0)})
-
-console.log(toAbc("(x-)(x-)"))
