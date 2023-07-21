@@ -62,4 +62,10 @@ export class Grid<T> {
             }
         }
     }
+    getPoints() {
+        return [...this.data.entries()].map(([coord, value]) => ({
+            pos: Vec2.fromString(coord),
+            value,
+        }))
+    }
 }
