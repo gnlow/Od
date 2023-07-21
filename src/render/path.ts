@@ -1,7 +1,7 @@
 import { Vec2, vec2 } from "./Vec2.ts"
 import { Grid } from "./Grid.ts"
 import { turtle } from "./turtle.ts"
-import { codeNormalize } from "../code/mod.ts"
+import { denormalize } from "../code/mod.ts"
 
 type Point = {pos: Vec2, dir: Vec2}
 
@@ -14,11 +14,26 @@ const dirToStr =
         ["─╮ "," ╭─","─╯ "," ╰─"],
     ][turn % 4][1.5*x + 0.5*y + 1.5]
 
+const skeleton = (code: string) => {
+    turtle(({move, turnCW}) => {
+        for (const char of code) {
+            if (char == "-") {
+                move()
+                turnCW()
+                turnCW()
+                turnCW()
+            } else {
+                turnCW()
+            }
+        }
+    })
+}
+
 export function path(
     code: string,
     log: (...args: unknown[]) => void = () => {},
 ) {
-    code = codeNormalize(code)
+    code = denormalize(code)
     try {
     return turtle(({move, turnCW, pos, dir,}) => {
         const grid = new Grid<string>()
