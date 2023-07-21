@@ -1,7 +1,5 @@
-import { Vec2, vec2 } from "./Vec2.ts"
-import { Grid } from "./Grid.ts"
-import { turtle, TurtleControl } from "./turtle.ts"
-import { denormalize } from "../code/mod.ts"
+import { Vec2, vec2, Grid, turtle } from "../util/mod.ts"
+import { denormalize, skeleton } from "../code/mod.ts"
 
 type Point = {pos: Vec2, dir: Vec2}
 
@@ -13,32 +11,6 @@ const dirToStr =
         ["───"," │ "," │ ","───"],
         ["─╮ "," ╭─","─╯ "," ╰─"],
     ][turn % 4][1.5*x + 0.5*y + 1.5]
-
-type SkeletonControl = {
-    move: () => void
-    turnCW: () => void
-
-    addPoint: () => void
-    readChar: (char: string) => void
-}
-
-const skeleton =
-    ({move, turnCW, addPoint, readChar}: SkeletonControl) =>
-    (code: string) => {
-        addPoint()
-        for (const char of code) {
-            if (char == "-") {
-                move()
-                addPoint()
-                turnCW()
-                turnCW()
-                turnCW()
-            } else {
-                readChar(char)
-                turnCW()
-            }
-        }
-    }
 
 export function path(
     code: string,
