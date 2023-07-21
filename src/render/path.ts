@@ -1,6 +1,6 @@
 import { Vec2, vec2 } from "./Vec2.ts"
 import { Grid } from "./Grid.ts"
-import { turtle } from "./turtle.ts"
+import { turtle, TurtleControl } from "./turtle.ts"
 import { denormalize } from "../code/mod.ts"
 
 type Point = {pos: Vec2, dir: Vec2}
@@ -14,20 +14,31 @@ const dirToStr =
         ["─╮ "," ╭─","─╯ "," ╰─"],
     ][turn % 4][1.5*x + 0.5*y + 1.5]
 
-const skeleton = (code: string) => {
-    turtle(({move, turnCW}) => {
+type SkeletonControl = {
+    move: () => void
+    turnCW: () => void
+
+    addPoint: () => void
+    readChar: (char: string) => void
+}
+
+const skeleton =
+    ({move, turnCW, addPoint, readChar}: SkeletonControl) =>
+    (code: string) => {
+        addPoint()
         for (const char of code) {
             if (char == "-") {
                 move()
+                addPoint()
                 turnCW()
                 turnCW()
                 turnCW()
             } else {
+                readChar(char)
                 turnCW()
             }
         }
-    })
-}
+    }
 
 export function path(
     code: string,
@@ -77,32 +88,16 @@ export function path(
             })
         }
     
-        grid.set(pos(), "─┼─")
-        for (const char of code) {
-            log(char, dirToStr(dir(), 0), pos()+"")
-            if (char == "-") {
-                move()
-                /*
-                grid.set(pos(), dirToStr(dir(), 0))
-                move()
-                */
-                grid.set(pos(), "─┼─")
-                turnCW()
-                turnCW()
-                turnCW()
-            } else {
-                if (char == "(") {
-                    push()
-                }
-                if (char == ")") {
-                    pop()
-                }
-                if (char == "x") {
-                    //
-                }
-                turnCW()
-            }
-        }
+        skeleton({
+            move,
+            turnCW,
+            addPoint: () => grid.set(pos(), "─┼─"),
+            readChar: (char: string) => {
+                if (char == "(") push()
+                if (char == ")") pop()
+                if (char == "x") {/* pass */}
+            },
+        })(code)
 
         return grid
     })({pos: vec2(0, 0), dir: vec2(-1, 0)})
