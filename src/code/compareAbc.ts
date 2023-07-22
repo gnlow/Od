@@ -1,6 +1,5 @@
 // @deno-types="npm:@types/lodash"
 import _ from "npm:lodash"
-import { S } from "../../web/.svelte-kit/output/client/_app/immutable/chunks/index.14be1a5c.js"
 
 const count =
     (as: string[]) =>
@@ -53,17 +52,17 @@ const compareChar =
 const compareCapture =
     (a: string[], b: string[], result: Record<string, string> = {}) => {
         const isComparable = a.every((_, i) => {
-            if (result[a[i]]) {
+            if (result[a[i].toUpperCase()]) {
                 if (!compareChar(a[i], b[i]))
                     return false
-                if (!compareChar(result[a[i]], b[i]))
+                if (result[a[i].toUpperCase()] != b[i].toUpperCase())
                     return false
             } else {
                 if (!compareChar(a[i], b[i]))
                     return false
-                result[a[i]] = b[i]
-                return true
+                result[a[i].toUpperCase()] = b[i].toUpperCase()
             }
+            return true
         })
         return isComparable ? result : false
     }
@@ -78,7 +77,6 @@ const compareAbc =
         if (a2.length == 1) {
             return compareCapture(a2[0], b2[0])
         } else if (a1.length == 2) {
-            console.log(a1, b1)
             // deno-lint-ignore no-cond-assign
             if (result = compareCapture(a1[0], b1[0]))
                 return compareCapture(a1[1], b1[1], result)
@@ -96,12 +94,13 @@ const compareAbc =
 const stringToAbc =
     (s: string) => s.split(" ").map(x => x.split(""))
 
-console.log(normalize([ [ "A", "*", "0", "b" ], [ "0", "a", "B", "*" ] ] ))
-console.log(normalize(stringToAbc("A*0b 0aB*")))
 
 console.log(compareAbc(stringToAbc("A*0b 0aB*"), stringToAbc("A*B0 0*ba")))
 
-console.log(compareCapture(["*", "0", "b", "A"], ["*", "B", "0", "A"]))
-console.log(compareCapture(["*", "0", "a", "B"], ["*", "b", "a", "0"]))
+console.log(compareAbc(stringToAbc("A*0B 0ab*"), stringToAbc("A*B0 0*ba")))
 
-console.log(compareChar("0", "B"))
+import { toAbc } from "./toAbc.ts"
+
+console.log(toAbc("((x-)x)"), toAbc("(x-)(x-)"))
+
+console.log(compareAbc(toAbc("(x(-x))"), toAbc("(x-)(x-)")))

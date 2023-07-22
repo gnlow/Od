@@ -20,7 +20,6 @@ export const toAbc = (code: string) =>
             },
             turnCW,
             addPoint: () => {
-                console.log(pos())
                 grid.at(pos()) || grid.set(pos(), [])
             },
             readChar: (char: string) => {
