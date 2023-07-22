@@ -75,7 +75,13 @@ const compareAbc =
             return false
         let result: false | Record<string, string>
         if (a2.length == 1) {
-            return compareCapture(a2[0], b2[0])
+            // deno-lint-ignore no-cond-assign
+            if (result = compareCapture(a2[0], b2[0]))
+                return compareCapture(a0[0], b0[0], result)
+                // TODO
+
+            else return false
+
         } else if (a1.length == 2) {
             // deno-lint-ignore no-cond-assign
             if (result = compareCapture(a1[0], b1[0]))
@@ -104,3 +110,42 @@ import { toAbc } from "./toAbc.ts"
 console.log(toAbc("((x-)x)"), toAbc("(x-)(x-)"))
 
 console.log(compareAbc(toAbc("(x(-x))"), toAbc("(x-)(x-)")))
+
+import { Combination } from "npm:js-combinatorics"
+import { t29, t15, t13, t12 } from "../collection/mod.ts"
+
+import { $ } from "https://deno.land/x/iteruyo@v0.3.0/mod.ts"
+
+const tuple = <A extends unknown[]>(...as: A) => as
+
+const c = $(new Combination(t29, 2))
+    .map(x => [x, x])
+    .map(([o, x]) => tuple(o, x.map(toAbc)))
+    .map(([o, x]) => tuple(o, compareAbc(x[0], x[1])))
+    .filter(([o, x]) => !!x)
+    .map(([[o1, o2], x]) => tuple(o1, o2, x))
+
+import { flipH, flipV, rot180, normalizeAction } from "./actions.ts"
+
+const cc = c
+    .bypass(x => x.forEach(([o1, o2]) => console.log(o1, o2)))
+    .filter(([o1, o2]) => o1 != flipH(o2))
+
+console.log(cc.toArray())
+
+import { flow } from "https://esm.sh/@mobily/ts-belt@3.13.1"
+import {
+    normalize as codeNormalize,
+    denormalize
+} from "./util.ts"
+
+const norm = flow(
+    codeNormalize,
+    normalizeAction(flipH, flipV, rot180),
+    denormalize,
+)
+
+console.log(_.difference(t15.map(norm), t12.map(norm)))
+console.log(_.difference(t12.map(norm), t15.map(norm)))
+console.log(norm("()x-()x-"), codeNormalize(flipH("()-x()-x")))
+//console.log(t12.map(toAbc))
