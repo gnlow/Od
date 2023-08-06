@@ -133,7 +133,7 @@ const cc = c
 
 console.log(cc.toArray())
 
-import { flow } from "https://esm.sh/v130/@mobily/ts-belt@3.13.1"
+import { flow } from "@mobily/ts-belt"
 import {
     normalize as codeNormalize,
     denormalize

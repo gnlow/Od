@@ -1,5 +1,5 @@
 {
     "imports": {
-      "lodash": "npm:lodash@4.17.15"
+      "@mobily/ts-belt": "https://esm.sh/v130/@mobily/ts-belt@3.13.1"
   }
 }
