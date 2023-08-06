@@ -1,4 +1,4 @@
-import { pipe, flow } from "https://esm.sh/@mobily/ts-belt@3.13.1"
+import { pipe, flow } from "https://esm.sh/v130/@mobily/ts-belt@3.13.1"
 import { normalize } from "./util.ts"
 
 type Action<E> = (e: E) => E

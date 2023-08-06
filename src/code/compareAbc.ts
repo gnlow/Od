@@ -133,7 +133,7 @@ const cc = c
 
 console.log(cc.toArray())
 
-import { flow } from "https://esm.sh/@mobily/ts-belt@3.13.1"
+import { flow } from "https://esm.sh/v130/@mobily/ts-belt@3.13.1"
 import {
     normalize as codeNormalize,
     denormalize
@@ -149,3 +149,13 @@ console.log(_.difference(t15.map(norm), t12.map(norm)))
 console.log(_.difference(t12.map(norm), t15.map(norm)))
 console.log(norm("()x-()x-"), norm("()-x()-x"))
 //console.log(t12.map(toAbc))
+
+$(new Combination(t15, 2)).filter(([a, b]) => !!compareAbc(toAbc(norm(a)), toAbc(norm(b))))
+    .pipe(x => console.log(x.toArray()))
+
+console.log(
+    compareAbc(
+        toAbc("((x-)x)-"),
+        toAbc(denormalize(rot180(codeNormalize("(-x)(-x)")))),
+    )
+)
