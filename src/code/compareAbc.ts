@@ -150,12 +150,45 @@ console.log(_.difference(t12.map(norm), t15.map(norm)))
 console.log(norm("()x-()x-"), norm("()-x()-x"))
 //console.log(t12.map(toAbc))
 
-$(new Combination(t15, 2)).filter(([a, b]) => !!compareAbc(toAbc(norm(a)), toAbc(norm(b))))
+$(new Combination(t29, 2)).filter(([a, b]) => !!compareAbc(toAbc(norm(a)), toAbc(norm(b))))
     .pipe(x => console.log(x.toArray()))
 
 console.log(
     compareAbc(
         toAbc("((x-)x)-"),
+        toAbc("(-x)(-x)"),
+    )
+)
+console.log(
+    compareAbc(
+        toAbc("(-x)(-x)"),
         toAbc(denormalize(rot180(codeNormalize("(-x)(-x)")))),
     )
+)
+
+console.log(
+    t13.map(x => toAbc(x).map(y => y.join("")).join(" "))
+)
+
+let a = t29
+t29.forEach(
+    x => {
+        if (a.includes(x)) {
+            a = a.filter(y => !compareAbc(toAbc(x), toAbc(y)))
+            a = a.filter(y => !compareAbc(
+                toAbc(x),
+                toAbc(denormalize(flipH(codeNormalize(y))))
+            ))
+            a.push(x)
+        }
+    }
+)
+console.log(a.length, a)
+console.log(_.difference(a.map(norm), t12.map(norm)))
+console.log(_.difference(t12.map(norm), a.map(norm)))
+console.log(denormalize(flipH("(x(-))x-")))
+
+console.log(
+        toAbc("((x-))x-"),
+        toAbc("((-)x)-x"),
 )
