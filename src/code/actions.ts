@@ -34,4 +34,4 @@ export const normalizeAction =
     pipe(
         [x],
         ...actions.map(genAction) as [(xs: string[]) => string[]]
-    )[0]
+    ).sort()[0]

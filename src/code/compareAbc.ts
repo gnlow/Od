@@ -147,5 +147,5 @@ const norm = flow(
 
 console.log(_.difference(t15.map(norm), t12.map(norm)))
 console.log(_.difference(t12.map(norm), t15.map(norm)))
-console.log(norm("()x-()x-"), codeNormalize(flipH("()-x()-x")))
+console.log(norm("()x-()x-"), norm("()-x()-x"))
 //console.log(t12.map(toAbc))
